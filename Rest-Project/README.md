@@ -5,8 +5,8 @@ http://localhost:8080/swagger-ui.html
 
 default accounts 
 
-Admin   password : 12345  pincode 1234
-Melik   password : 12345  pincode 1234
+Admin   password : 12345  
+Melik   password : 12345 
 DefaultUser  password : 12345
 
 http://localhost:8080/api/web/index   

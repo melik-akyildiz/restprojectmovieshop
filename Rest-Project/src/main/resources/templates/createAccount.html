@@ -1,0 +1,69 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-3.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Test Challenge Melik AKYILDIZ</title>
+
+    <script src="/webjars/angularjs/1.6.4/angular.js"></script>
+    <script src="/webjars/angularjs/1.6.4/angular-resource.js"></script>
+    <script src="/webjars/angularjs/1.6.4/angular-route.js"></script>
+    <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/css/main.css"/>
+    <script src="/js/main.js"></script>
+    <script src="/js/createAccount.js"></script>
+</head>
+<body>
+<div class="padding" ng-app="app" ng-controller="addAccount">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Account Details</strong>
+                    <small>enter your account details</small>
+                </div>
+                <form role="form"  name="add_form" id="add_form"  >
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="name">Beneficiary Name</label>
+                                <input class="form-control" id="name" name="name" type="text" placeholder="Enter your name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="accountNumber">AccountNumber</label>
+                                <input class="form-control" id="accountNumber" name="accountNumber" type="text" th:value="${generatedAccountNumber}" readonly="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="pinCode">Four Digit Pin Code</label>
+                                <div class="input-group">
+                                    <input class="form-control" type="text" id="pinCode"  name="pinCode" placeholder="0000" maxlength="4" >
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-sm btn-success float-right" type="submit" th:ng-click="'recordAccount()'">
+                        <i class="mdi mdi-gamepad-circle"></i> Continue</button>
+                    <button class="btn btn-sm btn-danger" type="reset">
+                        <i class="mdi mdi-lock-reset"></i> Reset</button>
+                </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

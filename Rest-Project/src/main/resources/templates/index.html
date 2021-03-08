@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Test Challenge Melik AKYILDIZ</title>
+
+    <script src="/webjars/angularjs/1.6.4/angular.js"></script>
+    <script src="/webjars/angularjs/1.6.4/angular-resource.js"></script>
+    <script src="/webjars/angularjs/1.6.4/angular-route.js"></script>
+    <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/css/main.css"/>
+    <script src="/js/main.js"></script>
+    <script src="/js/controller.js"></script>
+</head>
+<body>
+<div><a th:href="@{/logout}">Logout</a> &nbsp;&nbsp;<a th:href="@{/api/web/createAccount}">Create Account</a></div>
+<div ng-app="app" ng-controller="controller" data-ng-init="getAllCC();loadComboBox();">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div class="navbar-text">
+                    <button id="btn-id" ng-click="getAllCC()">Show all</button>
+                </div>
+                <div class="navbar-text">
+                    Search By Movie Name: <input ng-model="searchText" ng>
+                    <button id="btn-search" ng-click="search()">SEARCH</button>
+                </div>
+                <div class="navbar-text">
+                    Filter By Genre :
+                    <select name="comboboxTypes" id="comboboxTypes" ng-model="comboboxTypes"
+                            ng-change="filterProducts(comboboxTypes)">
+                        <option value="" disabled>Select By Genre</option>
+                        <option ng-repeat="types in productGenres" value="{{types}}">{{types}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="card-header">
+        <strong>All Movies On System</strong>
+        <small>Select movies</small>
+    </div>
+    <table ng-show="products.length" style="padding: 50px; width: 60%;">
+        <tr>
+            <th align="left">Name</th>
+            <th align="left">Genre</th>
+            <th align="left">Products Price</th>
+            <th align="left">Product Name</th>
+
+
+        </tr>
+        <tr ng-repeat="item in products">
+            <td>{{ item.name }}</td>
+            <td>{{ item.genre }}</td>
+            <td>{{ item.productsPrice.amount }}</td>
+            <td>{{ item.productsPrice.type }}</td>
+
+            <td><input type="checkbox" id="chkCustomer_{{item.id}}" ng-model="item.Selected"
+                       th:ng-change="'selectProduct({{item.id}},'+${userId}+')'"></td>
+
+        </tr>
+    </table>
+    <br />
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div class="navbar-text">
+                    <button id="btn-buy" th:ng-click="'rentMovie('+${userId}+')'">Rent</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="card">
+        <div class="card-header">
+            <strong>Transaction History</strong>
+            <small>of your user</small>
+        </div>
+        <br />
+    <table ng-show="transaction.length" style="padding: 150px; width: 100%;" data-ng-init="getAllTransaction();">
+        <tr>
+            <th align="left">id</th>
+            <th align="left">Customer Account</th>
+            <th align="left">Customer Name</th>
+            <th align="left">Totol Price</th>
+            <th align="left">Buyout</th>
+            <th align="left">Rent To</th>
+            <th></th>
+
+        </tr>
+        <tr ng-repeat="item in transaction">
+            <td>{{ item.id }}</td>
+            <td>{{ item.ownerAccount.accountNumber }}</td>
+            <td>{{ item.ownerAccount.name }}</td>
+            <td>{{ item.amount }}</td>
+            <td>{{ item.created_at }}</td>
+            <td>{{ item.rent_to }}</td>
+            <td><div ng-if="item.status != 'SETTLED'">
+                <button id="btn-buy" th:ng-click="'rentBackMovie(item.id)'">Return Back</button>
+            </div></td>
+        </tr>
+    </table>
+
+
+</div>
+
+</body>
+</html>

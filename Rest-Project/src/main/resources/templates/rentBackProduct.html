@@ -1,0 +1,102 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-3.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Test Challenge Melik AKYILDIZ</title>
+
+    <script src="/webjars/angularjs/1.6.4/angular.js"></script>
+    <script src="/webjars/angularjs/1.6.4/angular-resource.js"></script>
+    <script src="/webjars/angularjs/1.6.4/angular-route.js"></script>
+    <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/webjars/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.standalone.css"/>
+    <link rel="stylesheet" href="/webjars/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css"/>
+    <link rel="stylesheet" href="/css/main.css"/>
+    <script src="/js/main.js"></script>
+    <script src="/js/createTransaction.js"></script>
+</head>
+<body>
+
+<div class="padding">
+    <div class="row">
+        <div class="col-sm-6" ng-app="appupdate" ng-controller="updatedata">
+
+            <div class="card">
+                <div class="card-header">
+                    <strong>Rent Product</strong>
+                    <small>calculate price</small>
+                </div>
+                <br/>
+
+                <table style="padding: 100px; width: 100%;overflow: hidden">
+                    <thead>
+                    <tr>
+                        <th> name</th>
+                        <th> genre</th>
+                        <th> price</th>
+                        <th> overtime</th>
+                        <th> overtime price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="product: ${productList}">
+                        <td th:text="${product.name}"/>
+                        <td th:text="${product.genre}"/>
+                        <td th:id="${product.id}" th:name="${product.id}"
+                            th:text="${product.productsPrice.amount}"/>
+                        <td th:id="${product.id +'_overtime'}" th:name="${product.id+'_overtime'}"
+                            th:text="0"/>
+                        <td th:id="${product.id + '_overtime_price'}" th:name="${product.id+ '_overtime_price'}"
+                            th:text="0"/>
+
+                    </tr>
+                    <tr>
+                        <td colspan="4">Total:</td>
+                        <td><b th:id="totalAmount" th:name="totalAmount"
+                               th:text="${#aggregates.sum(productList.![productsPrice.amount])}"/></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br/>
+
+                <form role="form" name="rent_product_form" id="rent_product_form">
+                    <input type="hidden" th:id="transactionId" th:name="transactionId" th:value="${transactionId}"/>
+                    <input id="currentDate" name="currentDate" type="hidden" th:value="${currentDate}">
+                    <div class="form-group row">
+                        <div class="col-md-4 mt-5">
+                            <label for="rentTo">Rent To</label>
+                            <div class="input-group date">
+                                <input type="text" class="form-control" id="rentTo" name="rentTo" autocomplete="off"
+                                       th:value="${transaction.rentTo}"
+                                       th:onload="_calculateTotalPrice([[${currentDate}]], [[${transaction.rentTo}]], [[${transaction.createdAt}]], [[${productList}]]);"
+                                       readonly/>
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-sm btn-success float-right" type="submit" th:ng-click="'recordRent()'">
+                            <i class="mdi mdi-gamepad-circle"></i> Continue
+                        </button>
+                        <button class="btn btn-sm btn-danger" type="reset">
+                            <i class="mdi mdi-lock-reset"></i> Reset
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="/webjars/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+<script>
+    $('.input-group.date').datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        format: "yyyy-mm-dd"
+    });
+</script>
+</body>
+</html>
